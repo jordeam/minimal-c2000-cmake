@@ -1,5 +1,4 @@
 # This file is for cross-compiling to the C2000 architecture.
-# It should be used with -DCMAKE_TOOLCHAIN_FILE=c2000-toolchain.cmake
 
 # Set CMAKE_SYSTEM_NAME to "Generic" for embedded systems without an OS.
 # set(CMAKE_SYSTEM_NAME Generic)
