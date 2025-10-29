@@ -5,11 +5,27 @@
 # set(CMAKE_CROSSCOMPILING TRUE)
 set(CMAKE_DEPENDS_USE_COMPILER FALSE)
 
+set(TI_C2000_TOOL_SHORT_VERSION "ccs1240")
+set(TI_C2000_TOOL_VERSION "22.6.1.LTS")
+set(TI_C2000_WARE_VERSION "5_00_00_00")
+# Set the target processor (e.g., F2837xD)
+set(C2000_DEVICE "f2837xd")
+
 # Set the C2000 toolchain path
 set(HOME $ENV{HOME})
 # Adjust this path as needed for your specific installation.
-set(TI_C2000_TOOLCHAIN_PATH "${HOME}/ti/ccs1120/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/bin")
-set(TI_C2000_WARE_PATH "${HOME}/ti/c2000/C2000Ware_4_01_00_00")
+set(TI_C2000_TOOLCHAIN_ROOT "${HOME}/ti/${TI_C2000_TOOL_SHORT_VERSION}/ccs/tools/compiler/ti-cgt-c2000_${TI_C2000_TOOL_VERSION}")
+set(TI_C2000_TOOLCHAIN_PATH "${TI_C2000_TOOLCHAIN_ROOT}/bin")
+set(TI_C2000_WARE_PATH "${HOME}/ti/c2000/${TI_C2000_WARE_VERSION}")
+
+# Set CMAKE_SYSROOT to point to the target's root filesystem
+# CMake will automatically look for headers in "${CMAKE_SYSROOT}/usr/include"
+set(CMAKE_SYSROOT "${TI_C2000_TOOLCHAIN_ROOT}")
+
+# Explicitly set the standard include directories for C and C++
+# This variable is specifically designed to be set by toolchain files.
+set(CMAKE_C_STANDARD_INCLUDE_DIRECTORIES "${CMAKE_SYSROOT}/include")
+set(CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES "${CMAKE_SYSROOT}/include")
 
 # Specify the C2000 compiler and linker binaries.
 set(CMAKE_C_COMPILER ${TI_C2000_TOOLCHAIN_PATH}/cl2000)
@@ -26,9 +42,6 @@ set(CMAKE_C_COMPILE_OBJECT
 )
 
 set(CMAKE_C_LINKER_WRAPPER_FLAG "")
-
-# Set the target processor (e.g., F2837xD)
-set(C2000_DEVICE "f2837xd")
 
 # Define compiler flags
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu0 -g --diag_warning=225 --diag_wrap=off --display_error_number -me --preproc_with_compile --preproc_dependency=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_C_COMPILER_ID}Deps.dep")

@@ -14,8 +14,8 @@ set(HOME $ENV{HOME})
 # Include directories (e.g., C2000Ware driverlib)
 include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/inc"
-    "${HOME}/ti/c2000/C2000Ware_4_01_00_00/device_support/${C2000_DEVICE}/common/include/"
-    "${HOME}/ti/c2000/C2000Ware_4_01_00_00/driverlib/${C2000_DEVICE}/driverlib/"
+    "${HOME}/ti/C2000Ware_${TI_C2000_WARE_VERSION}/device_support/${C2000_DEVICE}/common/include/"
+    "${HOME}/ti/C2000Ware_${TI_C2000_WARE_VERSION}/driverlib/${C2000_DEVICE}/driverlib/"
     )
 
 # Source files
@@ -30,7 +30,7 @@ add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
 
 # Add libraries (e.g., driverlib)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
-    "${HOME}/ti/c2000/C2000Ware_4_01_00_00/driverlib/f2837xd/driverlib/ccs/Debug/driverlib.lib" # Example driverlib path
+    "${HOME}/ti/C2000Ware_${TI_C2000_WARE_VERSION}/driverlib/${C2000_DEVICE}/driverlib/ccs/Debug/driverlib.lib" # Example driverlib path
 )
 
 # Add general compile options
@@ -41,6 +41,7 @@ target_compile_options(MyC2000Project PRIVATE
   # $<COMPILE_LANG_AND_ID:C,GNU,Clang:-MT>
   # Other C2000-specific options can go here, without generator expressions
   --opt_level=3
+  -DCPU1
 )
 
 target_link_options(${CMAKE_PROJECT_NAME} PRIVATE LINKER:${LINKER_CMD_FILE})
